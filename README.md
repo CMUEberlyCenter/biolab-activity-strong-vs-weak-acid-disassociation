@@ -2,10 +2,10 @@
 
 This project is a template for activities in the Biolab suite.
 
-![Travis (.org)](https://flat.badgen.net/travis/CMUEberlyCenter/biolab-template)
-![Coveralls github](https://flat.badgen.net/coveralls/c/github/CMUEberlyCenter/biolab-template)
-![Code Climate maintainability](https://flat.badgen.net/codeclimate/maintainability/CMUEberlyCenter/biolab-template)
-![Code Climate technical debt](https://flat.badgen.net/codeclimate/tech-debt/CMUEberlyCenter/biolab-template)
+![Travis (.org)](https://flat.badgen.net/travis/CMUEberlyCenter/biolab-activity-strong-vs-weak-acid-dissociation)
+![Coveralls github](https://flat.badgen.net/coveralls/c/github/CMUEberlyCenter/biolab-activity-strong-vs-weak-acid-dissociation)
+![Code Climate maintainability](https://flat.badgen.net/codeclimate/maintainability/CMUEberlyCenter/biolab-activity-strong-vs-weak-acid-dissociation)
+![Code Climate technical debt](https://flat.badgen.net/codeclimate/tech-debt/CMUEberlyCenter/biolab-activity-strong-vs-weak-acid-dissociation)
 
 ## Getting Started
 
