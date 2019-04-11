@@ -39,3 +39,27 @@ body {
     top: 200px;
     width: 100px;
 }
+
+#base-type {
+    margin: auto;
+    width: 50%;
+}
+
+#base-type > input[type="radio"] {
+    margin-left: 13px;
+    transform: scale(1.3);
+}
+
+#base-type-img-container {
+    height: 35px;
+}
+
+#strong-base-label {
+    position: relative;
+    left: 50px;
+}
+
+#weak-base-label {
+    position: relative;
+    left: 115px;
+}

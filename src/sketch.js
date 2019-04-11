@@ -81,11 +81,12 @@ var displayPHSetup = function(pPH) {
 }
 
 // Select strong vs weak acid
-var inputBaseTypeSetup = function (inputBaseType,beaker) {
+var inputBaseTypeSetup = function (p,inputBaseType,beaker) {
   /** @this p5.Element */
   var inputBaseTypeEvent = function () {
     var newBaseType = this.value();
 
+    // Remove all particles
     for (var i = numConjugateBases; i > 0; i--) {
         var sprite = beaker.particles[conjugateBaseType].sprites.get(i-1);
         sprite.particle.remove();
@@ -106,6 +107,8 @@ var inputBaseTypeSetup = function (inputBaseType,beaker) {
   };
 
   inputBaseType.input(inputBaseTypeEvent);
+
+  inputBaseType.id();
 }
 
 // Register callbacks to update UI
@@ -145,10 +148,18 @@ var UISetup = function(p,beaker) {
   displayPHSetup(pPH);
 
   var inputBaseType = p.createRadio('0').id('base-type');
+  var baseTypeImgs = p.createDiv().id('base-type-img-container');
+  inputBaseType.child(baseTypeImgs);
+
+  baseTypeImgs.child(p.createImg(StrongConjugateBase.prototype.
+    image_path,'Strong Conjugate Base').id("strong-base-label"));
+  baseTypeImgs.child(p.createImg(WeakConjugateBase.prototype.
+    image_path,'Weak Conjugate Base').id("weak-base-label"));
+
   inputBaseType.option('strong acid','StrongConjugateBase');
   inputBaseType.option('weak acid','WeakConjugateBase');
   inputBaseType.value(conjugateBaseType);
-  inputBaseTypeSetup(inputBaseType,beaker);
+  inputBaseTypeSetup(p,inputBaseType,beaker);
 
   registerUICallbacks(pNumAcids,pNumConjugateBases);
 }
