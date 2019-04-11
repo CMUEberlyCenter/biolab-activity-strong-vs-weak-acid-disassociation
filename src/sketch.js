@@ -9,11 +9,14 @@ import 'p5.play';
 import Beaker from 'p5.beaker/beaker.js';
 import ConjugateBase from 'p5.beaker/conjugate_base.js';
 import Proton from 'p5.beaker/proton.js';
+import StrongConjugateBase from 'p5.beaker/conjugate_base/strong.js';
+import WeakConjugateBase from 'p5.beaker/conjugate_base/weak.js';
 
 
 export const numConjugateBases = 10;
 export const numProtons = 10;
 export let numAcids = 0;
+export let conjugateBaseType = 'StrongConjugateBase';
 
 
 var particleTableUpdate = function(pNumAcids,pNumConjugateBases) {
@@ -77,15 +80,54 @@ var displayPHSetup = function(pPH) {
   pPH.html(`pH: ${Number((pH).toFixed(2))}`);
 }
 
+// Select strong vs weak acid
+var inputBaseTypeSetup = function (inputBaseType,beaker) {
+  /** @this p5.Element */
+  var inputBaseTypeEvent = function () {
+    var newBaseType = this.value();
+
+    for (var i = numConjugateBases; i > 0; i--) {
+        var sprite = beaker.particles[conjugateBaseType].sprites.get(i-1);
+        sprite.particle.remove();
+        delete sprite.particle;
+    }
+
+    numAcids=0;
+
+    // Add new particles
+    if (newBaseType==="StrongConjugateBase") {
+        beaker.addParticles(StrongConjugateBase,numConjugateBases);
+    }
+    else if (newBaseType==="WeakConjugateBase") {
+        beaker.addParticles(WeakConjugateBase,numConjugateBases);
+    }
+
+    conjugateBaseType = newBaseType;
+  };
+
+  inputBaseType.input(inputBaseTypeEvent);
+}
+
 // Register callbacks to update UI
-var registerUICallbacks = function (pPH,pNumAcids,pNumConjugateBases) {
-  ConjugateBase.prototype.register_callback("release_proton","pre",
+var registerUICallbacks = function (pNumAcids,pNumConjugateBases) {
+  StrongConjugateBase.prototype.register_callback("release_proton","pre",
     () => {
       numAcids -= 1;
       particleTableUpdate(pNumAcids,
         pNumConjugateBases);
     });
-  ConjugateBase.prototype.register_callback("reacts_with_proton","post",
+  StrongConjugateBase.prototype.register_callback("reacts_with_proton","post",
+    () => {
+      numAcids += 1;
+      particleTableUpdate(pNumAcids,pNumConjugateBases);
+    });
+  WeakConjugateBase.prototype.register_callback("release_proton","pre",
+    () => {
+      numAcids -= 1;
+      particleTableUpdate(pNumAcids,
+        pNumConjugateBases);
+    });
+  WeakConjugateBase.prototype.register_callback("reacts_with_proton","post",
     () => {
       numAcids += 1;
       particleTableUpdate(pNumAcids,pNumConjugateBases);
@@ -93,7 +135,7 @@ var registerUICallbacks = function (pPH,pNumAcids,pNumConjugateBases) {
 }
 
 
-var UISetup = function(p) {
+var UISetup = function(p,beaker) {
   var pNumConjugateBases = p.createP(numConjugateBases).
       id("num-conjugate-bases");
   var pNumAcids = p.createP(numAcids).id("num-acids");
@@ -102,7 +144,13 @@ var UISetup = function(p) {
   var pPH = p.createP('0').id('ph');
   displayPHSetup(pPH);
 
-  registerUICallbacks(pPH,pNumAcids,pNumConjugateBases);
+  var inputBaseType = p.createRadio('0').id('base-type');
+  inputBaseType.option('strong acid','StrongConjugateBase');
+  inputBaseType.option('weak acid','WeakConjugateBase');
+  inputBaseType.value(conjugateBaseType);
+  inputBaseTypeSetup(inputBaseType,beaker);
+
+  registerUICallbacks(pNumAcids,pNumConjugateBases);
 }
 
 
@@ -116,6 +164,8 @@ export default function Sketch(p) {
   p.preload = function() {
       Beaker.prototype.preload(p);
       ConjugateBase.prototype.preload(p);
+      WeakConjugateBase.prototype.preload(p);
+      StrongConjugateBase.prototype.preload(p);
       Proton.prototype.preload(p);
   }
 
@@ -127,7 +177,12 @@ export default function Sketch(p) {
 
       UISetup(p,beaker);
 
-      beaker.addParticles(ConjugateBase,numConjugateBases);
+      if (conjugateBaseType==="StrongConjugateBase") {
+        beaker.addParticles(StrongConjugateBase,numConjugateBases);
+      }
+      else if (conjugateBaseType==="WeakConjugateBase") {
+          beaker.addParticles(WeakConjugateBase,numConjugateBases);
+      }
       beaker.addParticles(Proton,numProtons);
   };
 
