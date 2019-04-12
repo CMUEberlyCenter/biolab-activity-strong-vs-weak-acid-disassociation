@@ -161,6 +161,8 @@ var UISetup = function(p,beaker) {
   inputBaseType.value(conjugateBaseType);
   inputBaseTypeSetup(p,inputBaseType,beaker);
 
+  inputBaseType.position(85,20);
+
   registerUICallbacks(pNumAcids,pNumConjugateBases);
 }
 
@@ -184,7 +186,7 @@ export default function Sketch(p) {
       p.createCanvas(500,500);
       p.background(255,255,255);
 
-      beaker = new Beaker(p,286,278,0,40,38,75);
+      beaker = new Beaker(p,286,278,0,75,38,110);
 
       UISetup(p,beaker);
 

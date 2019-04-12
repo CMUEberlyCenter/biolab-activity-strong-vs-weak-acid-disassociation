@@ -10,7 +10,7 @@ body {
 #particle-table {
     position: absolute;
     left: 100px;
-    top: 380px;
+    top: 420px;
 }
 
 #particle-table > div {
@@ -35,7 +35,7 @@ body {
 
 #pH {
     position: absolute;
-    left: 410px;
+    left: 400px;
     top: 200px;
     width: 100px;
 }
