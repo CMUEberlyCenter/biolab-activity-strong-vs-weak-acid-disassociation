@@ -16,7 +16,7 @@ import WeakConjugateBase from 'p5.beaker/conjugate_base/weak.js';
 export const numConjugateBases = 10;
 export const numProtons = 10;
 export let numAcids = 0;
-export let conjugateBaseType = 'StrongConjugateBase';
+export let conjugateBaseType = 'WeakConjugateBase';
 
 
 var particleTableUpdate = function(pNumAcids,pNumConjugateBases) {
@@ -151,13 +151,13 @@ var UISetup = function(p,beaker) {
   var baseTypeImgs = p.createDiv().id('base-type-img-container');
   inputBaseType.child(baseTypeImgs);
 
-  baseTypeImgs.child(p.createImg(StrongConjugateBase.prototype.
-    image_path,'Strong Conjugate Base').id("strong-base-label"));
   baseTypeImgs.child(p.createImg(WeakConjugateBase.prototype.
-    image_path,'Weak Conjugate Base').id("weak-base-label"));
+    image_path,'Weak Conjugate Base').id("strong-base-label"));
+  baseTypeImgs.child(p.createImg(StrongConjugateBase.prototype.
+    image_path,'Strong Conjugate Base').id("weak-base-label"));
 
-  inputBaseType.option('strong acid','StrongConjugateBase');
-  inputBaseType.option('weak acid','WeakConjugateBase');
+  inputBaseType.option('strong acid','WeakConjugateBase');
+  inputBaseType.option('weak acid','StrongConjugateBase');
   inputBaseType.value(conjugateBaseType);
   inputBaseTypeSetup(p,inputBaseType,beaker);
 
